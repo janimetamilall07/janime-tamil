@@ -1,0 +1,772 @@
+<html lang="en"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Janime Tamil All 07</title>
+<link href="https://fonts.googleapis.com/css2?family=Bangers&amp;family=Nunito:wght@400;600;700;800&amp;display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:#0a0a0f; --surface:#12121a; --card:#1a1a26; --border:#2a2a3e;
+    --accent:#ff3c5f; --accent2:#ff8c00; --blue:#4fc3f7;
+    --text:#eaeaf5; --muted:#7878a0; --green:#4caf50; --nav-h:68px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:var(--bg);color:var(--text);font-family:'Nunito',sans-serif;min-height:100vh;overflow-x:hidden;padding-bottom:var(--nav-h);}
+  body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse 80% 50% at 20% 20%,rgba(255,60,95,.07) 0%,transparent 60%),radial-gradient(ellipse 60% 40% at 80% 80%,rgba(79,195,247,.07) 0%,transparent 60%);pointer-events:none;z-index:0;}
+
+  /* LOGIN */
+  #loginPage{min-height:100vh;display:flex;align-items:center;justify-content:center;position:relative;z-index:1;padding:20px;}
+  .login-box{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:40px 36px;width:100%;max-width:420px;box-shadow:0 0 60px rgba(255,60,95,.1);animation:fadeUp .5s ease;}
+  .login-logo{text-align:center;margin-bottom:28px;}
+  .login-logo h1{font-family:'Bangers',cursive;font-size:2.4rem;letter-spacing:2px;background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+  .login-logo p{color:var(--muted);font-size:.85rem;margin-top:4px;}
+  .tabs{display:flex;gap:8px;margin-bottom:20px;background:var(--bg);border-radius:12px;padding:4px;}
+  .tab-btn{flex:1;padding:10px;border:none;border-radius:10px;background:transparent;color:var(--muted);font-family:'Nunito',sans-serif;font-weight:700;font-size:.9rem;cursor:pointer;transition:all .2s;}
+  .tab-btn.active{background:var(--accent);color:white;}
+  .auth-mode-tabs{display:flex;margin-bottom:20px;border:1px solid var(--border);border-radius:10px;overflow:hidden;}
+  .auth-mode-btn{flex:1;padding:9px;border:none;background:transparent;color:var(--muted);font-family:'Nunito',sans-serif;font-weight:700;font-size:.85rem;cursor:pointer;transition:all .2s;}
+  .auth-mode-btn.active{background:var(--card);color:var(--text);}
+  .ig{margin-bottom:14px;}
+  .ig label{display:block;font-size:.78rem;font-weight:700;color:var(--muted);margin-bottom:6px;text-transform:uppercase;letter-spacing:1px;}
+  .ig input{width:100%;padding:12px 16px;background:var(--bg);border:1px solid var(--border);border-radius:10px;color:var(--text);font-family:'Nunito',sans-serif;font-size:.95rem;outline:none;transition:border-color .2s;}
+  .ig input:focus{border-color:var(--accent);}
+  .login-btn{width:100%;padding:13px;background:linear-gradient(135deg,var(--accent),var(--accent2));border:none;border-radius:12px;color:white;font-family:'Nunito',sans-serif;font-weight:800;font-size:1rem;cursor:pointer;transition:opacity .2s,transform .1s;margin-top:4px;}
+  .login-btn:hover{opacity:.9;transform:translateY(-1px);}
+  .err{color:var(--accent);font-size:.82rem;text-align:center;margin-top:10px;min-height:18px;}
+  .suc{color:var(--green);font-size:.82rem;text-align:center;margin-top:10px;min-height:18px;}
+
+  /* MAIN */
+  #mainApp{display:none;position:relative;z-index:1;}
+  .navbar{position:sticky;top:0;z-index:100;background:rgba(10,10,15,.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:0 20px;display:flex;align-items:center;justify-content:space-between;height:56px;}
+  .nav-logo{font-family:'Bangers',cursive;font-size:1.5rem;letter-spacing:2px;background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+  .nav-right{display:flex;align-items:center;gap:8px;}
+  .nav-user{font-size:.8rem;color:var(--muted);}
+  .nav-user span{color:var(--blue);font-weight:700;}
+  .top-settings-btn{padding:5px 12px;background:transparent;border:1px solid var(--border);border-radius:8px;color:var(--muted);font-family:'Nunito',sans-serif;font-size:.8rem;cursor:pointer;transition:all .2s;display:none;}
+  .top-settings-btn:hover{border-color:var(--blue);color:var(--blue);}
+
+  /* BOTTOM NAV */
+  .bottom-nav{position:fixed;bottom:0;left:0;right:0;height:var(--nav-h);z-index:100;background:rgba(10,10,15,.97);backdrop-filter:blur(16px);border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-around;padding:0 4px;}
+  .bnav-btn{display:flex;flex-direction:column;align-items:center;gap:3px;padding:8px 12px;border:none;background:transparent;cursor:pointer;transition:all .2s;border-radius:12px;min-width:64px;position:relative;}
+  .bnav-btn:hover{background:rgba(255,255,255,.04);}
+  .bnav-icon{font-size:1.35rem;line-height:1;transition:transform .2s;}
+  .bnav-label{font-size:.62rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;transition:color .2s;}
+  .bnav-btn.active .bnav-icon{transform:scale(1.15);}
+  .bnav-btn.active .bnav-label{color:var(--accent);}
+  .bnav-btn.active::after{content:'';position:absolute;bottom:-1px;left:50%;transform:translateX(-50%);width:28px;height:3px;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:3px 3px 0 0;}
+  .bnav-btn.fab .bnav-icon{width:44px;height:44px;background:linear-gradient(135deg,var(--accent),var(--accent2));border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.3rem;box-shadow:0 4px 16px rgba(255,60,95,.4);transition:transform .2s,box-shadow .2s;}
+  .bnav-btn.fab:hover .bnav-icon{transform:scale(1.1);box-shadow:0 6px 20px rgba(255,60,95,.5);}
+  .bnav-btn.fab.active::after{display:none;}
+  .bnav-btn.fab .bnav-label{color:var(--accent2);}
+
+  /* PAGES */
+  .page{display:none;animation:fadeUp .3s ease;}
+  .page.active{display:block;}
+  .content{max-width:1100px;margin:0 auto;padding:22px 16px;}
+
+  /* HOME */
+  .hero-banner{background:linear-gradient(135deg,rgba(255,60,95,.12),rgba(255,140,0,.08));border:1px solid rgba(255,60,95,.2);border-radius:16px;padding:22px 20px;margin-bottom:20px;display:flex;align-items:center;justify-content:space-between;gap:16px;}
+  .hero-text h2{font-family:'Bangers',cursive;font-size:1.8rem;letter-spacing:2px;margin-bottom:4px;}
+  .hero-text h2 span{color:var(--accent);}
+  .hero-text p{font-size:.85rem;color:var(--muted);}
+  .hero-emoji{font-size:3rem;}
+  .stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:20px;}
+  .stat-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:14px 10px;text-align:center;}
+  .stat-num{font-family:'Bangers',cursive;font-size:1.8rem;background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+  .stat-label{font-size:.7rem;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.5px;}
+  .sec-title{font-family:'Bangers',cursive;font-size:1.4rem;letter-spacing:1px;margin-bottom:14px;}
+  .sec-title span{color:var(--accent);}
+
+  /* ALL ANIME */
+  .page-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:12px;}
+  .page-title{font-family:'Bangers',cursive;font-size:1.8rem;letter-spacing:2px;}
+  .page-title span{color:var(--accent);}
+  .search-box{padding:9px 14px;background:var(--surface);border:1px solid var(--border);border-radius:10px;color:var(--text);font-family:'Nunito',sans-serif;font-size:.9rem;outline:none;width:200px;transition:border-color .2s;}
+  .search-box:focus{border-color:var(--accent);}
+  .filter-row{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap;}
+  .chip{padding:5px 14px;border:1px solid var(--border);border-radius:20px;background:transparent;color:var(--muted);font-family:'Nunito',sans-serif;font-size:.76rem;font-weight:700;cursor:pointer;transition:all .2s;text-transform:uppercase;letter-spacing:.5px;}
+  .chip.active{background:var(--accent);border-color:var(--accent);color:white;}
+  .chip:hover:not(.active){border-color:var(--accent);color:var(--accent);}
+
+  /* ANIME CARDS */
+  .anime-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:13px;}
+  .anime-card{background:var(--card);border:1px solid var(--border);border-radius:13px;overflow:hidden;transition:transform .2s,box-shadow .2s;animation:fadeUp .4s ease;}
+  .anime-card:hover{transform:translateY(-4px);box-shadow:0 12px 28px rgba(255,60,95,.15);border-color:rgba(255,60,95,.3);}
+  .card-thumb{width:100%;height:118px;background:linear-gradient(135deg,#1a1a2e,#16213e);display:flex;align-items:center;justify-content:center;font-size:2.2rem;overflow:hidden;}
+  .card-thumb img{width:100%;height:100%;object-fit:cover;}
+  .card-body{padding:10px;}
+  .card-title{font-weight:800;font-size:.84rem;color:var(--text);margin-bottom:3px;line-height:1.3;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+  .card-genre{font-size:.68rem;color:var(--accent);font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px;}
+  .card-actions{display:flex;gap:5px;}
+  .watch-btn{flex:1;padding:6px 8px;background:linear-gradient(135deg,var(--accent),var(--accent2));border:none;border-radius:7px;color:white;font-family:'Nunito',sans-serif;font-weight:700;font-size:.74rem;cursor:pointer;text-decoration:none;text-align:center;display:block;transition:opacity .2s;}
+  .watch-btn:hover{opacity:.85;}
+  .edt-btn,.del-btn{padding:6px 8px;border:none;border-radius:7px;font-size:.7rem;cursor:pointer;font-family:'Nunito',sans-serif;font-weight:700;transition:opacity .2s;}
+  .edt-btn{background:rgba(79,195,247,.15);color:var(--blue);border:1px solid rgba(79,195,247,.3);}
+  .del-btn{background:rgba(255,60,95,.15);color:var(--accent);border:1px solid rgba(255,60,95,.3);}
+  .edt-btn:hover,.del-btn:hover{opacity:.7;}
+  .empty-state{text-align:center;padding:50px 20px;color:var(--muted);grid-column:1/-1;}
+  .empty-state .ei{font-size:3rem;margin-bottom:12px;}
+
+  /* NEW ANIME */
+  .narrow{max-width:580px;margin:0 auto;}
+  .form-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:22px;margin-bottom:16px;}
+  .form-card h3{font-family:'Bangers',cursive;font-size:1.2rem;letter-spacing:1px;color:var(--accent2);margin-bottom:16px;}
+  .fr{margin-bottom:13px;}
+  .fr label{display:block;font-size:.76rem;font-weight:700;color:var(--muted);margin-bottom:5px;text-transform:uppercase;letter-spacing:1px;}
+  .fi{width:100%;padding:11px 14px;background:var(--bg);border:1px solid var(--border);border-radius:10px;color:var(--text);font-family:'Nunito',sans-serif;font-size:.9rem;outline:none;transition:border-color .2s;}
+  .fi:focus{border-color:var(--accent2);}
+  .upload-box{background:var(--bg);border:2px dashed var(--border);border-radius:12px;overflow:hidden;transition:border-color .2s;}
+  .upload-box.dragover{border-color:var(--accent2);}
+  .drop-zone{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;padding:26px 20px;cursor:pointer;transition:background .2s;}
+  .drop-zone:hover{background:rgba(255,140,0,.04);}
+  .drop-zone .di{font-size:2.4rem;}
+  .drop-zone p{font-size:.83rem;color:var(--muted);text-align:center;}
+  .drop-zone p span{color:var(--accent2);font-weight:700;}
+  .hf{display:none;}
+  .prev-area{padding:12px 14px;background:rgba(255,140,0,.04);border-top:1px solid var(--border);display:none;}
+  .prev-row{display:flex;align-items:center;gap:10px;}
+  .prev-img{width:68px;height:52px;object-fit:cover;border-radius:7px;border:1px solid var(--border);}
+  .prev-info{flex:1;}
+  .prev-name{font-size:.8rem;font-weight:700;color:var(--text);margin-bottom:1px;}
+  .prev-size{font-size:.7rem;color:var(--muted);}
+  .rm-btn{padding:5px 10px;background:rgba(255,60,95,.1);border:1px solid rgba(255,60,95,.2);border-radius:6px;color:var(--accent);font-family:'Nunito',sans-serif;font-size:.74rem;font-weight:700;cursor:pointer;}
+  .prog-wrap{padding:0 14px 10px;display:none;}
+  .prog-bar{width:100%;height:5px;background:var(--border);border-radius:3px;overflow:hidden;}
+  .prog-fill{height:100%;width:0%;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width .3s;border-radius:3px;}
+  .up-status{padding:0 14px 10px;font-size:.8rem;font-weight:700;min-height:14px;}
+  .up-status.uploading{color:var(--blue);}
+  .up-status.ok{color:var(--green);}
+  .up-status.fail{color:var(--accent);}
+  .or-sep{display:flex;align-items:center;gap:10px;margin:12px 0;}
+  .or-sep::before,.or-sep::after{content:'';flex:1;height:1px;background:var(--border);}
+  .or-sep span{font-size:.7rem;color:var(--muted);font-weight:700;text-transform:uppercase;}
+  .sub-btn{width:100%;padding:14px;background:linear-gradient(135deg,var(--accent),var(--accent2));border:none;border-radius:12px;color:white;font-family:'Nunito',sans-serif;font-weight:800;font-size:1rem;cursor:pointer;transition:opacity .2s,transform .1s;}
+  .sub-btn:hover{opacity:.9;transform:translateY(-1px);}
+
+  /* PROFILE */
+  .profile-wrap{max-width:460px;margin:0 auto;}
+  .profile-header{background:linear-gradient(135deg,rgba(255,60,95,.1),rgba(79,195,247,.08));border:1px solid var(--border);border-radius:20px;padding:26px 22px;margin-bottom:18px;text-align:center;}
+  .avatar{width:78px;height:78px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent2));display:flex;align-items:center;justify-content:center;font-size:2.2rem;margin:0 auto 12px;box-shadow:0 4px 20px rgba(255,60,95,.3);}
+  .profile-name{font-family:'Bangers',cursive;font-size:1.8rem;letter-spacing:1px;margin-bottom:3px;}
+  .profile-email{font-size:.84rem;color:var(--muted);margin-bottom:10px;}
+  .rbadge{display:inline-block;padding:4px 14px;border-radius:20px;font-size:.76rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;}
+  .rbadge.admin{background:rgba(255,140,0,.15);color:var(--accent2);border:1px solid rgba(255,140,0,.3);}
+  .rbadge.user{background:rgba(79,195,247,.1);color:var(--blue);border:1px solid rgba(79,195,247,.2);}
+  .p-stats{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:16px;}
+  .p-stat{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:14px;text-align:center;}
+  .p-stat .num{font-family:'Bangers',cursive;font-size:1.6rem;color:var(--accent);display:block;}
+  .p-stat .lbl{font-size:.72rem;color:var(--muted);font-weight:700;text-transform:uppercase;}
+  .p-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;overflow:hidden;margin-bottom:14px;}
+  .pci{display:flex;align-items:center;justify-content:space-between;padding:15px 18px;border-bottom:1px solid var(--border);cursor:pointer;transition:background .2s;}
+  .pci:last-child{border-bottom:none;}
+  .pci:hover{background:rgba(255,255,255,.03);}
+  .pci-l{display:flex;align-items:center;gap:12px;}
+  .pci-icon{font-size:1.2rem;width:36px;height:36px;background:var(--card);border-radius:10px;display:flex;align-items:center;justify-content:center;}
+  .pci-title{font-size:.88rem;font-weight:700;color:var(--text);}
+  .pci-sub{font-size:.73rem;color:var(--muted);margin-top:1px;}
+  .pci-arr{color:var(--muted);font-size:.9rem;}
+  .logout-btn2{width:100%;padding:13px;background:rgba(255,60,95,.1);border:1px solid rgba(255,60,95,.25);border-radius:12px;color:var(--accent);font-family:'Nunito',sans-serif;font-weight:800;font-size:1rem;cursor:pointer;transition:all .2s;}
+  .logout-btn2:hover{background:rgba(255,60,95,.2);}
+
+  /* USERS PAGE */
+  .users-wrap{max-width:640px;margin:0 auto;}
+  .page-back{display:flex;align-items:center;gap:12px;margin-bottom:20px;}
+  .back-btn{padding:6px 14px;background:var(--card);border:1px solid var(--border);border-radius:8px;color:var(--muted);font-family:'Nunito',sans-serif;font-weight:700;font-size:.82rem;cursor:pointer;transition:all .2s;}
+  .back-btn:hover{border-color:var(--accent);color:var(--accent);}
+  .user-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:16px 18px;margin-bottom:10px;display:flex;align-items:center;gap:14px;animation:fadeUp .3s ease;}
+  .user-avatar{width:46px;height:46px;border-radius:50%;background:linear-gradient(135deg,var(--blue),#0288d1);display:flex;align-items:center;justify-content:center;font-size:1.3rem;flex-shrink:0;}
+  .user-info{flex:1;}
+  .user-name{font-size:.92rem;font-weight:800;color:var(--text);margin-bottom:2px;}
+  .user-email{font-size:.76rem;color:var(--muted);}
+  .user-date{font-size:.72rem;color:var(--muted);margin-top:2px;}
+  .user-num{font-family:'Bangers',cursive;font-size:1.1rem;color:var(--muted);}
+  .users-empty{text-align:center;padding:40px 20px;color:var(--muted);}
+  .users-empty .ei{font-size:2.5rem;margin-bottom:10px;}
+  .users-summary{background:linear-gradient(135deg,rgba(79,195,247,.08),rgba(255,60,95,.06));border:1px solid var(--border);border-radius:14px;padding:18px 20px;margin-bottom:18px;display:flex;align-items:center;justify-content:space-between;}
+  .users-summary .big{font-family:'Bangers',cursive;font-size:2rem;color:var(--blue);}
+  .users-summary .lbl{font-size:.78rem;color:var(--muted);font-weight:700;text-transform:uppercase;}
+
+  /* SETTINGS */
+  .settings-wrap{max-width:560px;margin:0 auto;}
+  .s-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:20px;margin-bottom:14px;}
+  .s-card h3{font-family:'Bangers',cursive;font-size:1.15rem;letter-spacing:1px;color:var(--blue);margin-bottom:14px;}
+  .s-row{margin-bottom:12px;}
+  .s-row label{display:block;font-size:.75rem;font-weight:700;color:var(--muted);margin-bottom:5px;text-transform:uppercase;letter-spacing:1px;}
+  .s-input{width:100%;padding:10px 13px;background:var(--bg);border:1px solid var(--border);border-radius:10px;color:var(--text);font-family:'Nunito',sans-serif;font-size:.88rem;outline:none;transition:border-color .2s;}
+  .s-input:focus{border-color:var(--blue);}
+  .s-hint{font-size:.74rem;color:var(--muted);margin-top:4px;line-height:1.5;}
+  .s-hint a{color:var(--blue);text-decoration:none;}
+  .s-btns{display:flex;gap:8px;flex-wrap:wrap;margin-top:2px;}
+  .s-btn{padding:9px 18px;border:none;border-radius:9px;font-family:'Nunito',sans-serif;font-weight:800;font-size:.86rem;cursor:pointer;transition:opacity .2s;}
+  .s-btn.blue{background:linear-gradient(135deg,var(--blue),#0288d1);color:white;}
+  .s-btn.green{background:linear-gradient(135deg,var(--green),#388e3c);color:white;}
+  .s-btn.red{background:rgba(255,60,95,.12);border:1px solid rgba(255,60,95,.3);color:var(--accent);}
+  .s-btn:hover{opacity:.85;}
+  .api-status{display:flex;align-items:center;gap:8px;margin-bottom:10px;}
+  .dot{width:8px;height:8px;border-radius:50%;display:inline-block;flex-shrink:0;}
+  .dot.on{background:var(--green);box-shadow:0 0 6px var(--green);}
+  .dot.off{background:var(--muted);}
+
+  /* MODAL */
+  .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:200;display:none;align-items:center;justify-content:center;padding:20px;}
+  .modal-overlay.open{display:flex;}
+  .modal{background:var(--surface);border:1px solid var(--border);border-radius:18px;padding:24px;width:100%;max-width:450px;animation:fadeUp .3s ease;max-height:90vh;overflow-y:auto;}
+  .modal h3{font-family:'Bangers',cursive;font-size:1.35rem;letter-spacing:1px;margin-bottom:14px;color:var(--accent2);}
+  .modal .fr{margin-bottom:11px;}
+  .modal .fi{width:100%;padding:11px 13px;background:var(--bg);border:1px solid var(--border);border-radius:10px;color:var(--text);font-family:'Nunito',sans-serif;font-size:.9rem;outline:none;transition:border-color .2s;}
+  .modal .fi:focus{border-color:var(--accent);}
+  .modal-upload{background:var(--bg);border:1px dashed var(--border);border-radius:10px;overflow:hidden;margin-bottom:12px;}
+  .modal-drop{display:flex;align-items:center;justify-content:center;gap:10px;padding:13px;cursor:pointer;transition:background .2s;}
+  .modal-drop:hover{background:rgba(255,140,0,.04);}
+  .modal-drop span{font-size:.83rem;color:var(--muted);}
+  .modal-drop span b{color:var(--accent2);}
+  .modal-acts{display:flex;gap:10px;margin-top:14px;}
+  .m-save{flex:1;padding:11px;background:linear-gradient(135deg,var(--accent),var(--accent2));border:none;border-radius:10px;color:white;font-family:'Nunito',sans-serif;font-weight:800;cursor:pointer;}
+  .m-cancel{padding:11px 16px;background:transparent;border:1px solid var(--border);border-radius:10px;color:var(--muted);font-family:'Nunito',sans-serif;font-weight:700;cursor:pointer;}
+
+  /* TOAST */
+  .toast{position:fixed;bottom:calc(var(--nav-h) + 10px);right:14px;background:var(--card);border:1px solid var(--border);border-radius:12px;padding:10px 16px;font-size:.84rem;font-weight:700;z-index:999;transform:translateY(80px);opacity:0;transition:all .3s;max-width:250px;}
+  .toast.show{transform:translateY(0);opacity:1;}
+  .toast.success{border-color:#4caf50;color:#4caf50;}
+  .toast.error{border-color:var(--accent);color:var(--accent);}
+  .toast.info{border-color:var(--blue);color:var(--blue);}
+
+  .badge{display:inline-block;background:rgba(255,140,0,.15);color:var(--accent2);border:1px solid rgba(255,140,0,.3);border-radius:6px;padding:2px 7px;font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-left:5px;}
+
+  @keyframes fadeUp{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
+  @keyframes spin{to{transform:rotate(360deg);}}
+
+  @media(max-width:380px){.bnav-btn{padding:8px 8px;min-width:56px;}.bnav-label{font-size:.58rem;}.nav-user{display:none;}}
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="loginPage" style="display: none;">
+  <div class="login-box">
+    <div class="login-logo">
+      <h1>🎌 Janime Tamil All 07</h1>
+      <p>Tamil Anime Community</p>
+    </div>
+    <div class="tabs">
+      <button class="tab-btn" onclick="setRole('user')">👤 User</button>
+      <button class="tab-btn active" onclick="setRole('admin')">🔐 Admin</button>
+    </div>
+    <div class="auth-mode-tabs" id="authModeTabs" style="display: none;">
+      <button class="auth-mode-btn active" onclick="setAuthMode('login')">Login</button>
+      <button class="auth-mode-btn" onclick="setAuthMode('register')">Create Account</button>
+    </div>
+    <div class="ig" id="usernameGroup" style="display:none">
+      <label>Username</label>
+      <input type="text" id="regUsername" placeholder="Choose a username">
+    </div>
+    <div class="ig">
+      <label>Email</label>
+      <input type="email" id="loginEmail" placeholder="your@email.com">
+    </div>
+    <div class="ig">
+      <label>Password</label>
+      <input type="password" id="loginPass" placeholder="Enter password" onkeydown="if(event.key==='Enter')doAuth()">
+    </div>
+    <div class="ig" id="confirmGroup" style="display:none">
+      <label>Confirm Password</label>
+      <input type="password" id="confirmPass" placeholder="Repeat password">
+    </div>
+    <button class="login-btn" onclick="doAuth()">Login →</button>
+    <div class="err" id="loginError"></div>
+    <div class="suc" id="loginSuccess"></div>
+  </div>
+</div>
+
+<!-- MAIN APP -->
+<div id="mainApp" style="display: block;">
+
+  <nav class="navbar">
+    <div class="nav-logo">🎌 Janime Tamil 07</div>
+    <div class="nav-right">
+      <div class="nav-user">Hi, <span id="navUsername">Admin <span class="badge">Admin</span></span></div>
+      <button class="top-settings-btn" id="topSettingsBtn" onclick="showPage('settings')" style="display: block;">⚙️</button>
+    </div>
+  </nav>
+
+  <!-- HOME -->
+  <div class="page" id="homePage">
+    <div class="content">
+      <div class="hero-banner">
+        <div class="hero-text">
+          <h2>Welcome to<br><span>Janime Tamil</span></h2>
+          <p>Watch Tamil dubbed anime 📺</p>
+        </div>
+        <div class="hero-emoji">🎌</div>
+      </div>
+      <div class="stats-row">
+        <div class="stat-card"><div class="stat-num" id="statTotal">3</div><div class="stat-label">Anime</div></div>
+        <div class="stat-card"><div class="stat-num" id="statGenres">2</div><div class="stat-label">Genres</div></div>
+        <div class="stat-card"><div class="stat-num" id="statUsers">0</div><div class="stat-label">Users</div></div>
+      </div>
+      <div class="sec-title">🆕 Recently <span>Added</span></div>
+      <div class="anime-grid" id="recentGrid"><div class="anime-card"><div class="card-thumb">🔥</div><div class="card-body"><div class="card-title">Naruto Shippuden</div><div class="card-genre">Action</div><div class="card-actions"><a class="watch-btn" href="https://t.me/your_channel" target="_blank" rel="noopener">📲 Watch</a><button class="edt-btn" onclick="openEdit(0)">✏️</button><button class="del-btn" onclick="deleteAnime(0)">🗑️</button></div></div></div><div class="anime-card"><div class="card-thumb">⚡</div><div class="card-body"><div class="card-title">One Piece</div><div class="card-genre">Adventure</div><div class="card-actions"><a class="watch-btn" href="https://t.me/your_channel" target="_blank" rel="noopener">📲 Watch</a><button class="edt-btn" onclick="openEdit(1)">✏️</button><button class="del-btn" onclick="deleteAnime(1)">🗑️</button></div></div></div><div class="anime-card"><div class="card-thumb">🌊</div><div class="card-body"><div class="card-title">Dragon Ball Z</div><div class="card-genre">Action</div><div class="card-actions"><a class="watch-btn" href="https://t.me/your_channel" target="_blank" rel="noopener">📲 Watch</a><button class="edt-btn" onclick="openEdit(2)">✏️</button><button class="del-btn" onclick="deleteAnime(2)">🗑️</button></div></div></div></div>
+    </div>
+  </div>
+
+  <!-- ALL ANIME -->
+  <div class="page" id="allAnimePage">
+    <div class="content">
+      <div class="page-header">
+        <div class="page-title">All <span>Anime</span> <span id="animeCount" style="font-size:1rem;color:var(--muted);font-family:'Nunito';font-weight:700;">(3)</span></div>
+        <input type="text" class="search-box" id="searchBox" placeholder="🔍 Search..." oninput="renderAll()">
+      </div>
+      <div class="filter-row" id="filterRow"><button class="chip active" onclick="setGenre('All')">All</button><button class="chip" onclick="setGenre('Action')">Action</button><button class="chip" onclick="setGenre('Adventure')">Adventure</button></div>
+      <div class="anime-grid" id="animeGrid"><div class="anime-card"><div class="card-thumb">🔥</div><div class="card-body"><div class="card-title">Naruto Shippuden</div><div class="card-genre">Action</div><div class="card-actions"><a class="watch-btn" href="https://t.me/your_channel" target="_blank" rel="noopener">📲 Watch</a><button class="edt-btn" onclick="openEdit(0)">✏️</button><button class="del-btn" onclick="deleteAnime(0)">🗑️</button></div></div></div><div class="anime-card"><div class="card-thumb">⚡</div><div class="card-body"><div class="card-title">One Piece</div><div class="card-genre">Adventure</div><div class="card-actions"><a class="watch-btn" href="https://t.me/your_channel" target="_blank" rel="noopener">📲 Watch</a><button class="edt-btn" onclick="openEdit(1)">✏️</button><button class="del-btn" onclick="deleteAnime(1)">🗑️</button></div></div></div><div class="anime-card"><div class="card-thumb">🌊</div><div class="card-body"><div class="card-title">Dragon Ball Z</div><div class="card-genre">Action</div><div class="card-actions"><a class="watch-btn" href="https://t.me/your_channel" target="_blank" rel="noopener">📲 Watch</a><button class="edt-btn" onclick="openEdit(2)">✏️</button><button class="del-btn" onclick="deleteAnime(2)">🗑️</button></div></div></div></div>
+    </div>
+  </div>
+
+  <!-- NEW ANIME (admin) -->
+  <div class="page" id="newAnimePage">
+    <div class="content">
+      <div class="narrow">
+        <div class="form-card">
+          <h3>➕ Add New Anime</h3>
+          <div class="fr"><label>Anime Title *</label><input type="text" class="fi" id="newTitle" placeholder="e.g. Naruto Shippuden"></div>
+          <div class="fr"><label>Genre</label><input type="text" class="fi" id="newGenre" placeholder="e.g. Action, Romance..."></div>
+          <div class="fr"><label>Telegram Link *</label><input type="text" class="fi" id="newLink" placeholder="https://t.me/..."></div>
+        </div>
+        <div class="form-card">
+          <h3>🖼️ Thumbnail</h3>
+          <div class="upload-box" id="addUploadBox" ondragover="event.preventDefault();this.classList.add('dragover')" ondragleave="this.classList.remove('dragover')" ondrop="onDrop(event,'add')">
+            <label class="drop-zone" for="addFileInput">
+              <div class="di">📸</div>
+              <p><span>Click to choose</span> or drag &amp; drop</p>
+              <p style="font-size:.73rem">PNG, JPG, WEBP</p>
+            </label>
+            <input type="file" id="addFileInput" class="hf" accept="image/*" onchange="onFilePicked(this,'add')">
+            <div class="prev-area" id="addPrevArea">
+              <div class="prev-row">
+                <img id="addPrevImg" class="prev-img">
+                <div class="prev-info"><div class="prev-name" id="addFileName"></div><div class="prev-size" id="addFileSize"></div></div>
+                <button class="rm-btn" onclick="removeImg('add')">✕</button>
+              </div>
+            </div>
+            <div class="prog-wrap" id="addProgWrap"><div class="prog-bar"><div class="prog-fill" id="addProgFill"></div></div></div>
+            <div class="up-status" id="addUpStatus"></div>
+          </div>
+          <div class="or-sep"><span>or paste URL</span></div>
+          <input type="text" class="fi" id="newThumb" placeholder="https://i.ibb.co/...">
+        </div>
+        <button class="sub-btn" onclick="addAnime()">🚀 Add Anime</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROFILE -->
+  <div class="page active" id="profilePage">
+    <div class="content">
+      <div class="profile-wrap">
+        <div class="profile-header">
+          <div class="avatar" id="pAvatar">👑</div>
+          <div class="profile-name" id="pName">Admin</div>
+          <div class="profile-email" id="pEmail">admin@janime.com</div>
+          <span class="rbadge admin" id="pRole">👑 Admin</span>
+        </div>
+        <div class="p-stats">
+          <div class="p-stat"><span class="num" id="pStatAnime">3</span><span class="lbl">Total Anime</span></div>
+          <div class="p-stat"><span class="num" id="pStatGenres">2</span><span class="lbl">Genres</span></div>
+        </div>
+        <div class="p-card" id="profileMenuCard"><div class="pci" onclick="showPage('settings')"><div class="pci-l"><div class="pci-icon">⚙️</div><div><div class="pci-title">Admin Settings</div><div class="pci-sub">API keys, password &amp; data</div></div></div><div class="pci-arr">›</div></div><div class="pci" onclick="showPage('users')"><div class="pci-l"><div class="pci-icon">👥</div><div><div class="pci-title">Registered Users</div><div class="pci-sub">0 users</div></div></div><div class="pci-arr">›</div></div><div class="pci" onclick="downloadApp()"><div class="pci-l"><div class="pci-icon">⬇️</div><div><div class="pci-title">Download App</div><div class="pci-sub">Save website as HTML file</div></div></div><div class="pci-arr">›</div></div><div class="pci" onclick="showPage('allAnime')"><div class="pci-l"><div class="pci-icon">🎬</div><div><div class="pci-title">All Anime</div><div class="pci-sub">3 anime available</div></div></div><div class="pci-arr">›</div></div></div>
+        <button class="logout-btn2" onclick="logout()">🚪 Logout</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- USERS PAGE (admin) -->
+  <div class="page" id="usersPage">
+    <div class="content">
+      <div class="users-wrap">
+        <div class="page-back">
+          <button class="back-btn" onclick="showPage('profile')">← Back</button>
+          <div style="font-family:'Bangers',cursive;font-size:1.6rem;letter-spacing:2px;">👥 Registered <span style="color:var(--blue)">Users</span></div>
+        </div>
+        <div class="users-summary">
+          <div>
+            <div class="big" id="usersTotalNum">0</div>
+            <div class="lbl">Total Registered Users</div>
+          </div>
+          <div style="font-size:2.5rem">👥</div>
+        </div>
+        <div id="usersList"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SETTINGS (admin) -->
+  <div class="page" id="settingsPage">
+    <div class="content">
+      <div class="settings-wrap">
+        <div class="page-back">
+          <button class="back-btn" onclick="showPage('profile')">← Back</button>
+          <div style="font-family:'Bangers',cursive;font-size:1.6rem;letter-spacing:2px;">⚙️ Settings</div>
+        </div>
+
+        <!-- Download -->
+        <div class="s-card">
+          <h3>⬇️ Download App</h3>
+          <p style="font-size:.84rem;color:var(--muted);margin-bottom:14px;">Save the website as an HTML file to your device.</p>
+          <div class="s-btns">
+            <button class="s-btn blue" onclick="downloadApp()">⬇️ Download janime-tamil.html</button>
+          </div>
+        </div>
+
+        <!-- ImgBB -->
+        <div class="s-card">
+          <h3>🖼️ ImgBB API</h3>
+          <div class="api-status">
+            <span class="dot" id="apiDot"></span>
+            <span id="apiStatusTxt" style="font-size:.83rem;font-weight:700;"></span>
+          </div>
+          <div class="s-row">
+            <label>API Key</label>
+            <div style="display:flex;gap:8px;">
+              <input type="password" class="s-input" id="settingsApiKey" placeholder="Paste ImgBB API key" style="flex:1">
+              <button onclick="toggleKeyVis()" style="padding:0 12px;background:var(--card);border:1px solid var(--border);border-radius:9px;color:var(--muted);cursor:pointer;font-size:.95rem;">👁️</button>
+            </div>
+            <div class="s-hint">Get key: <a href="https://imgbb.com" target="_blank">imgbb.com</a> → Login → Settings → API</div>
+          </div>
+          <div class="s-btns"><button class="s-btn blue" onclick="saveApiKey()">💾 Save Key</button></div>
+        </div>
+
+        <!-- Change Password -->
+        <div class="s-card">
+          <h3>🔐 Change Password</h3>
+          <div class="s-row"><label>Current Password</label><input type="password" class="s-input" id="curPass" placeholder="Current password"></div>
+          <div class="s-row"><label>New Password</label><input type="password" class="s-input" id="newPassInput" placeholder="Min 6 chars"></div>
+          <div class="s-row"><label>Confirm New Password</label><input type="password" class="s-input" id="confNewPass" placeholder="Repeat new password"></div>
+          <div class="s-btns"><button class="s-btn green" onclick="changePass()">🔒 Update Password</button></div>
+        </div>
+
+        <!-- Danger -->
+        <div class="s-card" style="border-color:rgba(255,60,95,.25)">
+          <h3 style="color:var(--accent)">⚠️ Danger Zone</h3>
+          <div class="s-row"><label>Clear All Anime</label><p class="s-hint">Permanently deletes all anime entries.</p></div>
+          <div class="s-btns"><button class="s-btn red" onclick="clearAll()">🗑️ Clear All Anime</button></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BOTTOM NAV -->
+  <nav class="bottom-nav">
+    <button class="bnav-btn" onclick="showPage('home')" id="btn-home">
+      <div class="bnav-icon">🏠</div><div class="bnav-label">Home</div>
+    </button>
+    <button class="bnav-btn" onclick="showPage('allAnime')" id="btn-allAnime">
+      <div class="bnav-icon">🎬</div><div class="bnav-label">All Anime</div>
+    </button>
+    <button class="bnav-btn fab" onclick="showPage('newAnime')" id="btn-newAnime" style="display: flex;">
+      <div class="bnav-icon">➕</div><div class="bnav-label">New Anime</div>
+    </button>
+    <button class="bnav-btn active" onclick="showPage('profile')" id="btn-profile">
+      <div class="bnav-icon">👤</div><div class="bnav-label">Profile</div>
+    </button>
+  </nav>
+</div>
+
+<!-- EDIT MODAL -->
+<div class="modal-overlay" id="editModal">
+  <div class="modal">
+    <h3>✏️ Edit Anime</h3>
+    <div class="fr"><label>Title</label><input type="text" class="fi" id="editTitle"></div>
+    <div class="fr"><label>Genre</label><input type="text" class="fi" id="editGenre"></div>
+    <div class="fr"><label>Telegram Link</label><input type="text" class="fi" id="editLink"></div>
+    <div class="modal-upload">
+      <label class="modal-drop" for="editFileInput">
+        <span style="font-size:1.3rem">📸</span>
+        <span><b>Click</b> to change image</span>
+      </label>
+      <input type="file" id="editFileInput" class="hf" accept="image/*" onchange="onFilePicked(this,'edit')">
+      <div class="prev-area" id="editPrevArea">
+        <div class="prev-row">
+          <img id="editPrevImg" class="prev-img">
+          <div class="prev-info"><div class="prev-name" id="editFileName"></div></div>
+          <button class="rm-btn" onclick="removeImg('edit')">✕</button>
+        </div>
+      </div>
+      <div class="prog-wrap" id="editProgWrap"><div class="prog-bar"><div class="prog-fill" id="editProgFill"></div></div></div>
+      <div class="up-status" id="editUpStatus"></div>
+    </div>
+    <div class="fr"><label>Thumbnail URL</label><input type="text" class="fi" id="editThumb" placeholder="https://i.ibb.co/..."></div>
+    <div class="modal-acts">
+      <button class="m-cancel" onclick="closeModal()">Cancel</button>
+      <button class="m-save" onclick="saveEdit()">Save</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ── KEYS ─────────────────────────────────────────────
+const K={users:'janime_users_v3',anime:'janime_list_v2',session:'janime_session_v3',imgbbKey:'janime_imgbb_key',adminCreds:'janime_admin_creds'};
+const DEFAULT_ADMIN={email:'admin@janime.com',password:'janime2007'};
+
+// ── STATE ─────────────────────────────────────────────
+let loginRole='user',authMode='login',currentUser=null,editIndex=-1;
+let pickedFile={add:null,edit:null},keyVis=false,activeGenre='All';
+
+// ── UTILS ─────────────────────────────────────────────
+const $=id=>document.getElementById(id);
+const ls={
+  get:k=>{try{return JSON.parse(localStorage.getItem(k));}catch{return null;}},
+  set:(k,v)=>localStorage.setItem(k,JSON.stringify(v)),
+  del:k=>localStorage.removeItem(k),
+  raw:k=>localStorage.getItem(k)||''
+};
+const getAdminCreds=()=>ls.get(K.adminCreds)||DEFAULT_ADMIN;
+const getApiKey=()=>ls.raw(K.imgbbKey);
+const getUsers=()=>ls.get(K.users)||{};
+function getAnimeList(){const r=ls.get(K.anime);if(r&&r.length)return r;return[{title:'Naruto Shippuden',genre:'Action',link:'https://t.me/your_channel',thumb:''},{title:'One Piece',genre:'Adventure',link:'https://t.me/your_channel',thumb:''},{title:'Dragon Ball Z',genre:'Action',link:'https://t.me/your_channel',thumb:''}];}
+let animeList=getAnimeList();
+
+// ── LOGIN UI ──────────────────────────────────────────
+function setRole(r){loginRole=r;document.querySelectorAll('.tab-btn').forEach((b,i)=>b.classList.toggle('active',(i===0&&r==='user')||(i===1&&r==='admin')));$('authModeTabs').style.display=r==='admin'?'none':'flex';if(r==='admin')setAuthMode('login');clearMsgs();}
+function setAuthMode(m){authMode=m;document.querySelectorAll('.auth-mode-btn').forEach((b,i)=>b.classList.toggle('active',(i===0&&m==='login')||(i===1&&m==='register')));$('usernameGroup').style.display=m==='register'?'block':'none';$('confirmGroup').style.display=m==='register'?'block':'none';document.querySelector('.login-btn').textContent=m==='register'?'Create Account →':'Login →';clearMsgs();}
+function clearMsgs(){$('loginError').textContent='';$('loginSuccess').textContent='';}
+
+// ── AUTH ──────────────────────────────────────────────
+function doAuth(){
+  const email=$('loginEmail').value.trim().toLowerCase(),pass=$('loginPass').value;
+  const err=$('loginError'),ok=$('loginSuccess');
+  err.textContent='';ok.textContent='';
+  if(loginRole==='admin'){const c=getAdminCreds();if(email===c.email&&pass===c.password)startApp({email,username:'Admin',role:'admin'});else err.textContent='❌ Invalid admin credentials!';return;}
+  if(authMode==='register'){
+    const username=$('regUsername').value.trim(),confirm=$('confirmPass').value;
+    if(!username||username.length<2){err.textContent='❌ Username min 2 chars!';return;}
+    if(!email||!email.includes('@')){err.textContent='❌ Valid email required!';return;}
+    if(pass.length<6){err.textContent='❌ Password min 6 chars!';return;}
+    if(pass!==confirm){err.textContent='❌ Passwords do not match!';return;}
+    const users=getUsers();if(users[email]){err.textContent='❌ Email already registered!';return;}
+    users[email]={username,password:pass,createdAt:Date.now()};ls.set(K.users,users);
+    ok.textContent='✅ Account created! Logging in...';setTimeout(()=>startApp({email,username,role:'user'}),800);return;
+  }
+  if(!email||!email.includes('@')){err.textContent='❌ Valid email required!';return;}
+  if(!pass){err.textContent='❌ Enter your password!';return;}
+  const users=getUsers(),user=users[email];
+  if(!user){err.textContent='❌ No account found!';return;}
+  if(user.password!==pass){err.textContent='❌ Wrong password!';return;}
+  startApp({email,username:user.username,role:'user'});
+}
+
+// ── APP START / LOGOUT ────────────────────────────────
+function startApp(user){
+  currentUser=user;ls.set(K.session,user);
+  $('loginPage').style.display='none';$('mainApp').style.display='block';
+  $('navUsername').innerHTML=user.username+(user.role==='admin'?' <span class="badge">Admin</span>':'');
+  if(user.role==='admin'){$('btn-newAnime').style.display='flex';$('topSettingsBtn').style.display='block';}
+  else{$('btn-newAnime').style.display='none';$('topSettingsBtn').style.display='none';}
+  showPage('home');
+}
+function logout(){
+  currentUser=null;ls.del(K.session);
+  $('mainApp').style.display='none';$('loginPage').style.display='flex';
+  $('btn-newAnime').style.display='none';$('topSettingsBtn').style.display='none';
+  ['loginEmail','loginPass','regUsername','confirmPass'].forEach(id=>$(id).value='');
+  clearMsgs();
+}
+
+// ── PAGE NAV ──────────────────────────────────────────
+function showPage(name){
+  ['home','allAnime','newAnime','profile','users','settings'].forEach(p=>{
+    const el=$(p+'Page');if(el)el.classList.toggle('active',p===name);
+  });
+  const map={home:'btn-home',allAnime:'btn-allAnime',newAnime:'btn-newAnime',profile:'btn-profile'};
+  document.querySelectorAll('.bnav-btn').forEach(b=>b.classList.remove('active'));
+  if(map[name])$(map[name])?.classList.add('active');
+  $('topSettingsBtn').style.display=(currentUser?.role==='admin'&&name!=='settings')?'block':'none';
+  if(name==='home')renderHome();
+  if(name==='allAnime')renderAll();
+  if(name==='profile')renderProfile();
+  if(name==='users')renderUsers();
+  if(name==='settings')loadSettings();
+}
+
+// ── HOME ──────────────────────────────────────────────
+function renderHome(){
+  const users=getUsers();
+  const genres=new Set(animeList.map(a=>a.genre).filter(Boolean));
+  $('statTotal').textContent=animeList.length;
+  $('statGenres').textContent=genres.size;
+  $('statUsers').textContent=Object.keys(users).length;
+  const em=['🔥','⚡','🌊','💥','🌸','🗡️','🐉','👊','✨','🎭'];
+  const recent=animeList.slice(0,6);
+  $('recentGrid').innerHTML=recent.length?recent.map((a,i)=>cardHTML(a,animeList.indexOf(a),em[i%em.length])).join(''):`<div class="empty-state"><div class="ei">🎌</div><p>No anime yet!</p></div>`;
+}
+
+// ── ALL ANIME ─────────────────────────────────────────
+function renderAll(){
+  const q=$('searchBox').value.toLowerCase();
+  const genres=['All',...new Set(animeList.map(a=>a.genre).filter(Boolean))];
+  $('filterRow').innerHTML=genres.map(g=>`<button class="chip${g===activeGenre?' active':''}" onclick="setGenre('${g}')">${g}</button>`).join('');
+  let list=animeList.filter(a=>a.title.toLowerCase().includes(q)||(a.genre||'').toLowerCase().includes(q));
+  if(activeGenre!=='All')list=list.filter(a=>a.genre===activeGenre);
+  $('animeCount').textContent=`(${list.length})`;
+  const em=['🔥','⚡','🌊','💥','🌸','🗡️','🐉','👊','✨','🎭'];
+  $('animeGrid').innerHTML=list.length?list.map(a=>cardHTML(a,animeList.indexOf(a),em[animeList.indexOf(a)%em.length])).join(''):`<div class="empty-state"><div class="ei">🎌</div><p>No anime found.</p></div>`;
+}
+function setGenre(g){activeGenre=g;renderAll();}
+
+function cardHTML(a,i,emoji){
+  const th=a.thumb?`<img src="${a.thumb}" alt="${a.title}" onerror="this.parentElement.innerHTML='${emoji}'"/>`:''+emoji;
+  const adminBtns=currentUser?.role==='admin'?`<button class="edt-btn" onclick="openEdit(${i})">✏️</button><button class="del-btn" onclick="deleteAnime(${i})">🗑️</button>`:'';
+  return`<div class="anime-card"><div class="card-thumb">${th}</div><div class="card-body"><div class="card-title">${a.title}</div>${a.genre?`<div class="card-genre">${a.genre}</div>`:''}<div class="card-actions"><a class="watch-btn" href="${a.link}" target="_blank" rel="noopener">📲 Watch</a>${adminBtns}</div></div></div>`;
+}
+
+// ── PROFILE ───────────────────────────────────────────
+function renderProfile(){
+  if(!currentUser)return;
+  $('pAvatar').textContent=currentUser.role==='admin'?'👑':'👤';
+  $('pName').textContent=currentUser.username;
+  $('pEmail').textContent=currentUser.email;
+  $('pRole').textContent=currentUser.role==='admin'?'👑 Admin':'👤 User';
+  $('pRole').className='rbadge '+(currentUser.role==='admin'?'admin':'user');
+  const genres=new Set(animeList.map(a=>a.genre).filter(Boolean));
+  $('pStatAnime').textContent=animeList.length;
+  $('pStatGenres').textContent=genres.size;
+  const users=getUsers();
+  const userCount=Object.keys(users).length;
+
+  // Build menu items based on role
+  let items='';
+  if(currentUser.role==='admin'){
+    items+=pci('⚙️','Admin Settings','API keys, password & data',`showPage('settings')`);
+    items+=pci('👥','Registered Users',`${userCount} user${userCount!==1?'s':''}`,`showPage('users')`);
+    items+=pci('⬇️','Download App','Save website as HTML file',`downloadApp()`);
+  }
+  items+=pci('🎬','All Anime',`${animeList.length} anime available`,`showPage('allAnime')`);
+  $('profileMenuCard').innerHTML=items;
+}
+
+function pci(icon,title,sub,action){
+  return`<div class="pci" onclick="${action}"><div class="pci-l"><div class="pci-icon">${icon}</div><div><div class="pci-title">${title}</div><div class="pci-sub">${sub}</div></div></div><div class="pci-arr">›</div></div>`;
+}
+
+// ── USERS PAGE ────────────────────────────────────────
+function renderUsers(){
+  const users=getUsers();
+  const list=Object.entries(users).sort((a,b)=>b[1].createdAt-a[1].createdAt);
+  $('usersTotalNum').textContent=list.length;
+  if(!list.length){
+    $('usersList').innerHTML=`<div class="users-empty"><div class="ei">👥</div><p>No users registered yet.</p></div>`;
+    return;
+  }
+  $('usersList').innerHTML=list.map(([email,u],i)=>{
+    const date=u.createdAt?new Date(u.createdAt).toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'}):'Unknown';
+    const initials=(u.username||'?').charAt(0).toUpperCase();
+    return`<div class="user-card">
+      <div class="user-avatar">${initials}</div>
+      <div class="user-info">
+        <div class="user-name">${u.username||'Unknown'}</div>
+        <div class="user-email">📧 ${email}</div>
+        <div class="user-date">📅 Joined: ${date}</div>
+      </div>
+      <div class="user-num">#${list.length-i}</div>
+    </div>`;
+  }).join('');
+}
+
+// ── SETTINGS ──────────────────────────────────────────
+function loadSettings(){
+  const key=getApiKey();
+  $('apiDot').className='dot '+(key?'on':'off');
+  $('apiStatusTxt').textContent=key?'API Key configured ✓':'Not configured';
+  $('apiStatusTxt').style.color=key?'var(--green)':'var(--muted)';
+  ['curPass','newPassInput','confNewPass'].forEach(id=>$(id).value='');
+  $('settingsApiKey').value='';
+}
+function saveApiKey(){const k=$('settingsApiKey').value.trim();if(!k){showToast('API key empty!','error');return;}localStorage.setItem(K.imgbbKey,k);$('apiDot').className='dot on';$('apiStatusTxt').textContent='API Key configured ✓';$('apiStatusTxt').style.color='var(--green)';showToast('✅ ImgBB API Key saved!','success');}
+function toggleKeyVis(){keyVis=!keyVis;$('settingsApiKey').type=keyVis?'text':'password';}
+function changePass(){
+  const cur=$('curPass').value,newP=$('newPassInput').value,conf=$('confNewPass').value,c=getAdminCreds();
+  if(cur!==c.password){showToast('❌ Current password wrong!','error');return;}
+  if(newP.length<6){showToast('❌ Min 6 chars!','error');return;}
+  if(newP!==conf){showToast('❌ Passwords do not match!','error');return;}
+  ls.set(K.adminCreds,{email:c.email,password:newP});
+  ['curPass','newPassInput','confNewPass'].forEach(id=>$(id).value='');
+  showToast('✅ Password updated!','success');
+}
+function clearAll(){if(!confirm('Delete ALL anime? Cannot be undone!'))return;animeList=[];ls.set(K.anime,animeList);showPage('home');showToast('🗑️ All anime cleared!','success');}
+
+// ── DOWNLOAD APP ──────────────────────────────────────
+function downloadApp(){
+  const html=document.documentElement.outerHTML;
+  const blob=new Blob([html],{type:'text/html'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');
+  a.href=url;a.download='janime-tamil.html';
+  document.body.appendChild(a);a.click();
+  document.body.removeChild(a);URL.revokeObjectURL(url);
+  showToast('✅ Download started!','success');
+}
+
+// ── IMAGE UPLOAD ──────────────────────────────────────
+function onDrop(e,ctx){e.preventDefault();document.getElementById(ctx==='add'?'addUploadBox':'editUploadBox')?.classList.remove('dragover');const f=e.dataTransfer?.files[0];if(f&&f.type.startsWith('image/'))processFile(f,ctx);}
+function onFilePicked(input,ctx){const f=input.files[0];if(f)processFile(f,ctx);}
+function processFile(file,ctx){
+  pickedFile[ctx]=file;
+  const pa=ctx==='add'?'addPrevArea':'editPrevArea',pi=ctx==='add'?'addPrevImg':'editPrevImg',fn=ctx==='add'?'addFileName':'editFileName',fs=ctx==='add'?'addFileSize':null;
+  const r=new FileReader();r.onload=e=>{$(pi).src=e.target.result;$(pa).style.display='block';$(fn).textContent=file.name;if(fs)$(fs).textContent=fmtBytes(file.size);};r.readAsDataURL(file);
+  const key=getApiKey();
+  if(key)uploadImg(ctx,file,key);
+  else{const s=ctx==='add'?'addUpStatus':'editUpStatus';$(s).textContent='⚠️ No API key — go to Settings';$(s).className='up-status fail';}
+}
+function removeImg(ctx){
+  pickedFile[ctx]=null;
+  const pa=ctx==='add'?'addPrevArea':'editPrevArea',fi=ctx==='add'?'addFileInput':'editFileInput',s=ctx==='add'?'addUpStatus':'editUpStatus',t=ctx==='add'?'newThumb':'editThumb',pw=ctx==='add'?'addProgWrap':'editProgWrap';
+  $(pa).style.display='none';$(pw).style.display='none';$(s).textContent='';$(t).value='';$(fi).value='';
+}
+async function uploadImg(ctx,file,key){
+  const s=ctx==='add'?'addUpStatus':'editUpStatus',pw=ctx==='add'?'addProgWrap':'editProgWrap',pf=ctx==='add'?'addProgFill':'editProgFill',t=ctx==='add'?'newThumb':'editThumb';
+  $(s).textContent='⏳ Uploading...';$(s).className='up-status uploading';$(pw).style.display='block';
+  let p=0;const iv=setInterval(()=>{p=Math.min(p+Math.random()*12,88);$(pf).style.width=p+'%';},200);
+  try{
+    const fd=new FormData();fd.append('image',file);
+    const res=await fetch(`https://api.imgbb.com/1/upload?key=${key}`,{method:'POST',body:fd});
+    const data=await res.json();clearInterval(iv);$(pf).style.width='100%';
+    if(data.success){$(t).value=data.data.url;$(s).textContent='✅ Uploaded! URL filled.';$(s).className='up-status ok';showToast('✅ Image uploaded!','success');setTimeout(()=>$(pw).style.display='none',1200);}
+    else throw new Error(data.error?.message||'Upload failed');
+  }catch(e){clearInterval(iv);$(pw).style.display='none';$(s).textContent='❌ '+e.message;$(s).className='up-status fail';showToast('❌ Upload failed!','error');}
+}
+function fmtBytes(b){if(b<1024)return b+' B';if(b<1048576)return(b/1024).toFixed(1)+' KB';return(b/1048576).toFixed(1)+' MB';}
+
+// ── ANIME CRUD ────────────────────────────────────────
+function addAnime(){
+  const title=$('newTitle').value.trim(),genre=$('newGenre').value.trim(),link=$('newLink').value.trim(),thumb=$('newThumb').value.trim();
+  if(!title){showToast('Title required!','error');return;}if(!link){showToast('Telegram link required!','error');return;}
+  animeList.unshift({title,genre,link,thumb});ls.set(K.anime,animeList);
+  ['newTitle','newGenre','newLink','newThumb'].forEach(id=>$(id).value='');removeImg('add');
+  showToast('✅ Anime added!','success');showPage('allAnime');
+}
+function deleteAnime(i){if(!confirm(`Delete "${animeList[i].title}"?`))return;animeList.splice(i,1);ls.set(K.anime,animeList);renderAll();renderHome();showToast('🗑️ Deleted!','success');}
+function openEdit(i){
+  editIndex=i;const a=animeList[i];
+  $('editTitle').value=a.title;$('editGenre').value=a.genre||'';$('editLink').value=a.link;$('editThumb').value=a.thumb||'';
+  $('editPrevArea').style.display='none';$('editProgWrap').style.display='none';$('editUpStatus').textContent='';$('editFileInput').value='';pickedFile.edit=null;
+  if(a.thumb){$('editPrevImg').src=a.thumb;$('editPrevArea').style.display='block';$('editFileName').textContent='Current thumbnail';}
+  $('editModal').classList.add('open');
+}
+function saveEdit(){
+  const title=$('editTitle').value.trim(),link=$('editLink').value.trim();
+  if(!title||!link){showToast('Title & link required!','error');return;}
+  animeList[editIndex]={title,genre:$('editGenre').value.trim(),link,thumb:$('editThumb').value.trim()};
+  ls.set(K.anime,animeList);renderAll();renderHome();closeModal();showToast('✅ Saved!','success');
+}
+function closeModal(){$('editModal').classList.remove('open');}
+
+// ── TOAST ─────────────────────────────────────────────
+function showToast(msg,type='success'){const t=$('toast');t.textContent=msg;t.className=`toast ${type} show`;setTimeout(()=>t.classList.remove('show'),2500);}
+
+$('editModal').addEventListener('click',function(e){if(e.target===this)closeModal();});
+
+// ── AUTO LOGIN ────────────────────────────────────────
+(function(){const s=ls.get(K.session);if(s?.email)startApp(s);})();
+</script>
+
+
+</body></html>
